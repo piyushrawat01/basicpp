@@ -1,0 +1,16 @@
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+    // declaring Boolean
+    // variable with true value
+    bool a = true;
+    cout<<boolalpha;
+    for (a = 0; a <=0; a++)
+        cout << a<<"\n";
+        cout << a;
+
+    return 0;
+}
