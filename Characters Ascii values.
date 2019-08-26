@@ -1,0 +1,15 @@
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+    int counter=-128;
+    char a;
+    for (a = -128; a <= 126; a++){
+        cout<<counter<<".   " <<a<<"\n";
+    counter++;
+    }
+    cout<<counter<<".   " <<a<<"\n";
+    return 0;
+}
