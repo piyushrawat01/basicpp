@@ -1,0 +1,152 @@
+#include <iostream>
+#include<time.h>
+#include<math.h>
+#include<windows.h>
+#include<conio.h>
+#include<vector>
+
+#define newline (cout<<endl);
+//for changing text color on console
+
+#define normal (SetConsoleTextAttribute(h, 15 | FOREGROUND_INTENSITY));
+#define green (SetConsoleTextAttribute(h, FOREGROUND_GREEN | FOREGROUND_INTENSITY));
+#define red (SetConsoleTextAttribute(h, FOREGROUND_RED | FOREGROUND_INTENSITY));
+
+//geting HANDLE
+HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
+
+//Global vairables
+bool gameOver = false;
+int counter = 0;
+int arr[10][10];
+int x, y, chance = 0, missedChance = 0;
+int mode;
+std::vector <int> v;
+std::vector <int> w; 
+
+
+using namespace std;
+
+
+//to build random ship matrix everytime
+void buildMatrix(int arr[10][10],int n) {
+	srand(time(NULL));
+
+	for (int i = 0; i < n; i++) {
+		int x = rand() % n;
+		for (int j = 0; j < n; j++) {
+			arr[i][j] = 0;
+			
+		}
+		arr[i][x] = 1;
+	}
+}
+
+//To check entered values with the ship location data
+int matchValues(int arr[10][10], int x, int y) {
+	if (arr[x][y] == 1)
+		return 1;
+	else
+		return 0;
+}
+
+//Print ships location with hit ship as red
+void printArray(int arr[10][10], int n,std::vector<int> v, std::vector<int> w) {
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < n; j++) {
+			normal
+			if ((i == v[0]-1 && j == w[0] - 1 )|| ( i == v[1]-1)&&( j == w[1] - 1))
+			{
+				red
+				cout << arr[i][j] << "  ";
+				normal
+			}else cout << arr[i][j] << "  ";
+		}newline
+	}
+}
+
+//to take input from user
+void input(int arr[10][10],int i) {
+	int win=2;
+
+	    newline
+		newline
+		newline
+     	newline
+
+
+         normal
+		
+				cout << "Enter choice " << i + 1 << " : ";
+				cin >> x >> y;
+				if (matchValues(arr, x-1, y-1) == 1) 
+				{
+					//pushes successfull coordinates into vectors
+					v.push_back(x);
+					w.push_back(y);
+					counter++;
+					if (win-counter > 0) {
+						
+						green
+							cout << "Kaboom, only " << win - counter << " ";
+							((win - counter) > 1) ? cout << "ships" : cout << "ship";
+						cout<<" to go ";
+					}
+					
+				}
+				else {
+					red
+					cout << "Oops, Missed it ";
+					newline
+					cout << "Try Again";
+					newline
+				}
+
+				    green
+					if (counter == 2) {
+					cout << "You have successfully sinked 2 ships \n";
+					gameOver = true;
+					newline
+					printArray(arr, 10,v,w);
+					newline
+						green
+						cout << "Your Score is : " << 100-i;
+					normal
+						newline
+				}
+
+
+	}
+
+
+
+
+int main()
+{
+	normal
+		cout << "There are 10 ships in sea. ";
+     	cout << "Sink 2 ships and you win ";
+	    newline
+		newline
+		newline
+	
+cout << "About the Game :\n\n\nMade by Piyush Rawat.\n\n"
+			<< "Consider ships are arranged in a 10 10 array,"
+			<< " with each line having 1 ship in some random location within"
+			<< " the array. \nEnter space seprated cordinates and press return to see"
+			<< " if you hit it or miss it. Sink 2 ships and you win."
+			<< "\nAt last you would be awarded with score.";
+
+
+	buildMatrix(arr,10);
+	newline
+
+	newline
+
+	while (!gameOver) {
+		static int i = 0;
+		input(arr,i++);
+	}
+
+	return 0;
+}
