@@ -147,6 +147,6 @@ cout << "About the Game :\n\n\nMade by Piyush Rawat.\n\n"
 		static int i = 0;
 		input(arr,i++);
 	}
-
+system("pause");
 	return 0;
 }
